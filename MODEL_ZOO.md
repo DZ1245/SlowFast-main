@@ -27,7 +27,7 @@
 | X3D | M | - | 16 x 5 | 75.1 | 76.2 | 3.8 | 4.73 | [`link`](https://dl.fbaipublicfiles.com/pyslowfast/x3d_models/x3d_m.pyth) | Kinetics/X3D_M |
 | X3D | L | - | 16 x 5 | 76.9 | 77.5 | 6.2 | 18.37 | [`link`](https://dl.fbaipublicfiles.com/pyslowfast/x3d_models/x3d_l.pyth) | Kinetics/X3D_L |
 
-## AVA
+## AVA.
 
 | architecture | size | Pretrain Model |  frame length x sample rate  | MAP | AVA version | model |
 | ------------- | ------------- | ------------- | ------------- | ------------- | ------------- |------------- |
