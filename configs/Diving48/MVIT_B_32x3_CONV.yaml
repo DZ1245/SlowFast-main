@@ -15,8 +15,8 @@ DATA:
   TRAIN_CROP_SIZE: 224
   TEST_CROP_SIZE: 224
   INPUT_CHANNEL_NUM: [3]
-  PATH_TO_DATA_DIR: /home/dz/workspace/SlowFast-main/datapath/kinetics
-  # PATH_TO_DATA_DIR: path-to-k400-or-k600-dir
+  PATH_TO_DATA_DIR: /data_8T/syx/dataset/diving48/videos/
+  PATH_PREFIX: /data_8T/syx/dataset/diving48/videos/   #新增
   TRAIN_JITTER_SCALES_RELATIVE: [0.08, 1.0]
   TRAIN_JITTER_ASPECT_RELATIVE: [0.75, 1.3333]
   PATH_LABEL_SEPARATOR: ','
@@ -86,4 +86,4 @@ DATA_LOADER:
   PIN_MEMORY: True
 NUM_GPUS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /home/dz/workspace/SlowFast-main/output/kinetics_32x3
+OUTPUT_DIR: /home/dz/workspace/SlowFast-main/output/diving48_mvit32x3 # 输出位置
