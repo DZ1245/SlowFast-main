@@ -77,16 +77,16 @@ class Kinetics(torch.utils.data.Dataset):
         self._num_epoch = 0.0
         self._num_yielded = 0
         self.skip_rows = self.cfg.DATA.SKIP_ROWS
-        self.use_chunk_loading = (
+        self.use_chunk_loading = ( #块加载？
             True
             if self.mode in ["train"] and self.cfg.DATA.LOADER_CHUNK_SIZE > 0
             else False
         )
         self.dummy_output = None
-        # For training or validation mode, one single clip is sampled from every
-        # video. For testing, NUM_ENSEMBLE_VIEWS clips are sampled from every
-        # video. For every clip, NUM_SPATIAL_CROPS is cropped spatially from
-        # the frames. 对于每个剪辑，NUM_SPATIAL_CROPS从帧中进行空间裁剪。
+        # For training or validation mode, one single clip is sampled from every video. 
+        # For testing, NUM_ENSEMBLE_VIEWS clips are sampled from every video. 
+        # For every clip, NUM_SPATIAL_CROPS is cropped spatially from the frames. 
+        # 对于每个剪辑，NUM_SPATIAL_CROPS从帧中进行空间裁剪。
         
         if self.mode in ["train", "val"]:
             self._num_clips = 1
@@ -99,10 +99,14 @@ class Kinetics(torch.utils.data.Dataset):
         self._construct_loader()
         self.aug = False
         self.rand_erase = False
-        self.use_temporal_gradient = False
+        self.use_temporal_gradient = False # 时间梯度
+        # ChatGPT：“时间梯度”一词通常指随时间变化的变量的变化率。
+        # 在机器学习和人工智能领域中，“时间梯度”特指函数随时间的变化率。
+        # 用于优化机器学习模型以提高其预测准确性。
         self.temporal_gradient_rate = 0.0
         self.cur_epoch = 0
 
+        # AUG通常指数据增强（Data Augmentation）技术
         if self.mode == "train" and self.cfg.AUG.ENABLE:
             self.aug = True
             if self.cfg.AUG.RE_PROB > 0:
