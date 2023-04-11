@@ -77,7 +77,7 @@ class Kinetics(torch.utils.data.Dataset):
         self._num_epoch = 0.0
         self._num_yielded = 0
         self.skip_rows = self.cfg.DATA.SKIP_ROWS
-        self.use_chunk_loading = ( #块加载？
+        self.use_chunk_loading = ( # ？块加载？
             True
             if self.mode in ["train"] and self.cfg.DATA.LOADER_CHUNK_SIZE > 0
             else False
@@ -152,12 +152,17 @@ class Kinetics(torch.utils.data.Dataset):
                             path_to_file, fetch_info
                         )
                     )
+                # num_clips train和val均为1
                 for idx in range(self._num_clips):
                     self._path_to_videos.append(
                         os.path.join(self.cfg.DATA.PATH_PREFIX, path)
                     )
                     self._labels.append(int(label))
+                    # 时空idx与num_clips相关，当前视频的第几个clip？
                     self._spatial_temporal_idx.append(idx)
+                    # "Meta"通常指元数据（metadata），元数据是描述数据的数据，
+                    # 即数据的属性和特征的描述信息，通常不包含数据本身。
+                    # 给每个视频的每个clip分配一个meta
                     self._video_meta[clip_idx * self._num_clips + idx] = {}
         assert (
             len(self._path_to_videos) > 0
@@ -208,6 +213,9 @@ class Kinetics(torch.utils.data.Dataset):
             index, self._num_yielded = index
             if self.cfg.MULTIGRID.SHORT_CYCLE:
                 index, short_cycle_idx = index
+        # ChatGPT:dummy_output 通常指虚拟输出，
+        # 是在某些情况下为了保持模型输出的形状而添加到模型中的一个临时输出节点
+        # ？保持模型输出的形状？
         if self.dummy_output is not None:
             return self.dummy_output
         if self.mode in ["train", "val"]:
@@ -217,16 +225,17 @@ class Kinetics(torch.utils.data.Dataset):
             min_scale = self.cfg.DATA.TRAIN_JITTER_SCALES[0]
             max_scale = self.cfg.DATA.TRAIN_JITTER_SCALES[1]
             crop_size = self.cfg.DATA.TRAIN_CROP_SIZE
-            if short_cycle_idx in [0, 1]:
+            if short_cycle_idx in [0, 1]: # MViT中没有用到，？短边循环？
                 crop_size = int(
                     round(
                         self.cfg.MULTIGRID.SHORT_CYCLE_FACTORS[short_cycle_idx]
                         * self.cfg.MULTIGRID.DEFAULT_S
                     )
                 )
-            if self.cfg.MULTIGRID.DEFAULT_S > 0:
+            if self.cfg.MULTIGRID.DEFAULT_S > 0: # MViT中没有
                 # Decreasing the scale is equivalent to using a larger "span"
                 # in a sampling grid.
+                # 减小尺度相当于在采样网格中使用更大的“跨度”。
                 min_scale = int(
                     round(
                         float(min_scale)
@@ -235,14 +244,14 @@ class Kinetics(torch.utils.data.Dataset):
                     )
                 )
         elif self.mode in ["test"]:
-            temporal_sample_index = (
+            temporal_sample_index = ( # 时间采样序号
                 self._spatial_temporal_idx[index]
                 // self.cfg.TEST.NUM_SPATIAL_CROPS
             )
             # spatial_sample_index is in [0, 1, 2]. Corresponding to left,
             # center, or right if width is larger than height, and top, middle,
             # or bottom if height is larger than width.
-            spatial_sample_index = (
+            spatial_sample_index = ( # 空间采样序号
                 (
                     self._spatial_temporal_idx[index]
                     % self.cfg.TEST.NUM_SPATIAL_CROPS
@@ -251,11 +260,12 @@ class Kinetics(torch.utils.data.Dataset):
                 else 1
             )
             min_scale, max_scale, crop_size = (
-                [self.cfg.DATA.TEST_CROP_SIZE] * 3
+                [self.cfg.DATA.TEST_CROP_SIZE] * 3 # 224，224，224
                 if self.cfg.TEST.NUM_SPATIAL_CROPS > 1
-                else [self.cfg.DATA.TRAIN_JITTER_SCALES[0]] * 2
+                else [self.cfg.DATA.TRAIN_JITTER_SCALES[0]] * 2 # 256,256,224
                 + [self.cfg.DATA.TEST_CROP_SIZE]
             )
+            # Test无需抖动，Min_scale、max_scale和crop_size应该是相同的。
             # The testing is deterministic and no jitter should be performed.
             # min_scale, max_scale, and crop_size are expect to be the same.
             assert len({min_scale, max_scale}) == 1
@@ -268,6 +278,7 @@ class Kinetics(torch.utils.data.Dataset):
             if self.mode in ["train"]
             else 1
         )
+        # 数据增强抖动部分代码？
         min_scale, max_scale, crop_size = [min_scale], [max_scale], [crop_size]
         if len(min_scale) < num_decode:
             min_scale += [self.cfg.DATA.TRAIN_JITTER_SCALES[0]] * (
@@ -358,12 +369,6 @@ class Kinetics(torch.utils.data.Dataset):
                 target_fps += random.uniform(
                     0.0, self.cfg.DATA.TRAIN_JITTER_FPS
                 )
-
-            # logger.warning(
-            #         "Failed  {}".format(
-            #             num_frames[0]
-            #         )
-            # )
 
             # Decode video. Meta info is used to perform selective decoding.
             frames, time_idx, tdiff = decoder.decode(
