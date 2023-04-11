@@ -278,6 +278,14 @@ class Kinetics(torch.utils.data.Dataset):
             if self.mode in ["train"]
             else 1
         )
+        
+        # 测试
+        # logger.warning(
+        #             "Test:::self.cfg.DATA.TRAIN_CROP_NUM_TEMPORAL {} ".format(
+        #                 self.cfg.DATA.TRAIN_CROP_NUM_TEMPORAL
+        #             ) + self.mode
+        #         )
+
         # 数据增强抖动部分代码？
         min_scale, max_scale, crop_size = [min_scale], [max_scale], [crop_size]
         if len(min_scale) < num_decode:

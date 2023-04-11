@@ -416,6 +416,8 @@ def pyav_decode(
     # Try to fetch the decoding information from the video head. Some of the
     # videos does not support fetching the decoding information, for that case
     # it will get None duration.
+    # 尝试从视频头获取解码信息。有些视频不支持获取解码信息，
+    # 在这种情况下，它将得到None duration。
     fps = float(container.streams.video[0].average_rate)
     frames_length = container.streams.video[0].frames
     duration = container.streams.video[0].duration
@@ -575,6 +577,8 @@ def decode(
         print("Failed to decode by {} with exception: {}".format(backend, e))
         return None, None, None
 
+    # 如果pyav解码中duration是None，frames_decoded=None
+    # 但是应该对全视频进行解码？
     # Return None if the frames was not decoded successfully.
     if frames_decoded is None or None in frames_decoded:
         return None, None, None

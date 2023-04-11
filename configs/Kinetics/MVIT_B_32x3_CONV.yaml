@@ -1,7 +1,7 @@
 TRAIN:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 1
+  BATCH_SIZE: 4
   EVAL_PERIOD: 10
   CHECKPOINT_PERIOD: 10
   AUTO_RESUME: True
@@ -84,6 +84,6 @@ TEST:
 DATA_LOADER:
   NUM_WORKERS: 8
   PIN_MEMORY: True
-NUM_GPUS: 1
+NUM_GPUS: 2
 RNG_SEED: 0
 OUTPUT_DIR: /home/dz/workspace/SlowFast-main/output/kinetics_32x3
