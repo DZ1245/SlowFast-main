@@ -232,6 +232,7 @@ def load_checkpoint(
     logger.info("Loading network weights from {}.".format(path_to_checkpoint))
 
     # Account for the DDP wrapper in the multi-gpu setting.
+    # Caffe2 是 Facebook 开源的深度学习框架，与 PyTorch 有着很强的兼容性。
     ms = model.module if data_parallel else model
     if convert_from_caffe2:
         with pathmgr.open(path_to_checkpoint, "rb") as f:
@@ -588,6 +589,9 @@ def sub_to_normal_bn(sd):
         new_sd (OrderedDict): a dict with Sub-BN parameters reshaped to
         normal parameters.
     """
+    # 这段代码是将 Sub-BN（子批归一化）的参数转换为普通的 BN（批归一化）参数。
+    # Sub-BN 是一种优化批归一化算法的方法，可以减少 GPU 的显存消耗，
+    # 但在模型保存和评估时需要将其转换为普通的 BN 层。
     new_sd = copy.deepcopy(sd)
     modifications = [
         ("bn.bn.running_mean", "bn.running_mean"),

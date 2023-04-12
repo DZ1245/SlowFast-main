@@ -5,7 +5,7 @@ TRAIN:
   EVAL_PERIOD: 10
   CHECKPOINT_PERIOD: 10
   AUTO_RESUME: True
-  CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/models/k400.pyth
+  CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/k400.pyth
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: pyav
