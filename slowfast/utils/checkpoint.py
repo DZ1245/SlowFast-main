@@ -19,6 +19,7 @@ from slowfast.utils.env import checkpoint_pathmgr as pathmgr
 logger = logging.get_logger(__name__)
 
 
+# 创建检查点目录
 def make_checkpoint_dir(path_to_job):
     """
     Creates the checkpoint directory (if not present already).
@@ -35,6 +36,7 @@ def make_checkpoint_dir(path_to_job):
     return checkpoint_dir
 
 
+# 获取存储checkpoint地址 
 def get_checkpoint_dir(path_to_job):
     """
     Get path for storing checkpoints.
@@ -44,6 +46,7 @@ def get_checkpoint_dir(path_to_job):
     return os.path.join(path_to_job, "checkpoints")
 
 
+# 获取具体checkpoint权重地址
 def get_path_to_checkpoint(path_to_job, epoch, task=""):
     """
     Get the full path to a checkpoint file.
@@ -58,6 +61,7 @@ def get_path_to_checkpoint(path_to_job, epoch, task=""):
     return os.path.join(get_checkpoint_dir(path_to_job), name)
 
 
+# 获取文件夹中最后的checkpoint权重
 def get_last_checkpoint(path_to_job, task):
     """
     Get the last checkpoint from the checkpointing folder.
@@ -78,6 +82,7 @@ def get_last_checkpoint(path_to_job, task):
     return os.path.join(d, name)
 
 
+# 检查给的目录是否包括checkpoint目录
 def has_checkpoint(path_to_job):
     """
     Determines if the given directory contains a checkpoint.
@@ -89,6 +94,7 @@ def has_checkpoint(path_to_job):
     return any("checkpoint" in f for f in files)
 
 
+# 判断当前轮次是否应该保存检查点
 def is_checkpoint_epoch(cfg, cur_epoch, multigrid_schedule=None):
     """
     Determine if a checkpoint should be saved on current epoch.
@@ -96,6 +102,7 @@ def is_checkpoint_epoch(cfg, cur_epoch, multigrid_schedule=None):
         cfg (CfgNode): configs to save.
         cur_epoch (int): current number of epoch of the model.
         multigrid_schedule (List): schedule for multigrid training.
+        多重网络设计
     """
     if cur_epoch + 1 == cfg.SOLVER.MAX_EPOCH:
         return True
@@ -112,6 +119,7 @@ def is_checkpoint_epoch(cfg, cur_epoch, multigrid_schedule=None):
     return (cur_epoch + 1) % cfg.TRAIN.CHECKPOINT_PERIOD == 0
 
 
+# 保存一个checkpoint
 def save_checkpoint(path_to_job, model, optimizer, epoch, cfg, scaler=None):
     """
     Save a checkpoint.
@@ -149,6 +157,7 @@ def save_checkpoint(path_to_job, model, optimizer, epoch, cfg, scaler=None):
     return path_to_checkpoint
 
 
+# 膨胀权重
 def inflate_weight(state_dict_2d, state_dict_3d):
     """
     Inflate 2D model weights in state_dict_2d to the 3D model weights in
@@ -188,6 +197,7 @@ def inflate_weight(state_dict_2d, state_dict_3d):
     return state_dict_inflated
 
 
+# 获取checkpoint权重
 def load_checkpoint(
     path_to_checkpoint,
     model,

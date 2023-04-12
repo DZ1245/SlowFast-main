@@ -77,6 +77,7 @@ def train_epoch(
     for cur_iter, (inputs, labels, index, time, meta) in enumerate(
         train_loader
     ):
+        # input = [Batchsize x Channel x Frames x High x With]
         # Transfer the data to the current GPU device.
         if cfg.NUM_GPUS:
             if isinstance(inputs, (list,)):
