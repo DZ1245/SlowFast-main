@@ -732,7 +732,8 @@ def load_train_checkpoint(cfg, model, optimizer, scaler=None):
             scaler=scaler,
             clear_name_pattern=cfg.TRAIN.CHECKPOINT_CLEAR_NAME_PATTERN,
         )
-        start_epoch = checkpoint_epoch + 1
+        start_epoch = checkpoint_epoch - 20
+        # start_epoch = checkpoint_epoch + 1
     elif cfg.TRAIN.CHECKPOINT_FILE_PATH != "":
         logger.info("Load from given checkpoint file.")
         checkpoint_epoch = load_checkpoint(
@@ -747,7 +748,8 @@ def load_train_checkpoint(cfg, model, optimizer, scaler=None):
             clear_name_pattern=cfg.TRAIN.CHECKPOINT_CLEAR_NAME_PATTERN,
             image_init=cfg.TRAIN.CHECKPOINT_IN_INIT,
         )
-        start_epoch = checkpoint_epoch + 1
+        start_epoch = checkpoint_epoch - 20
+        # start_epoch = checkpoint_epoch + 1
     else:
         start_epoch = 0
 

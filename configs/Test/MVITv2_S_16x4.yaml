@@ -3,7 +3,7 @@ TRAIN:
   DATASET: kinetics
   BATCH_SIZE: 4
   EVAL_PERIOD: 10
-  CHECKPOINT_PERIOD: 10
+  CHECKPOINT_PERIOD: 25
   AUTO_RESUME: True
   CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
 DATA:
@@ -96,4 +96,4 @@ DATA_LOADER:
 NUM_GPUS: 2
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /home/dz/workspace/SlowFast-main/output/Test_MViT2_S
+OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast_output/Test_MViT2_S

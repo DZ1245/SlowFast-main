@@ -591,7 +591,8 @@ def train(cfg):
             clear_name_pattern=cfg.TRAIN.CHECKPOINT_CLEAR_NAME_PATTERN,
             image_init=cfg.TRAIN.CHECKPOINT_IN_INIT,
         )
-        start_epoch = checkpoint_epoch + 1
+        # start_epoch = checkpoint_epoch + 1
+        start_epoch = checkpoint_epoch - 20
     else:
         start_epoch = 0
 
