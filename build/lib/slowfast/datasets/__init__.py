@@ -7,7 +7,7 @@ from .charades import Charades  # noqa
 from .imagenet import Imagenet  # noqa
 from .kinetics import Kinetics  # noqa
 from .ssv2 import Ssv2  # noqa
-from .diving48 import Diving48  # noqa
+from .diving48 import Diving48  # 每次新加一个数据集，需要重新python setup.py build develop
 
 try:
     from .ptv_datasets import Ptvcharades, Ptvkinetics, Ptvssv2  # noqa
