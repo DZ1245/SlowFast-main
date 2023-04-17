@@ -545,6 +545,8 @@ def train(cfg):
 
     # Construct the optimizer.
     optimizer = optim.construct_optimizer(model, cfg)
+    #共两处判断layer_decay  第二处
+    print(optimizer.param_groups[0]["layer_decay"])
     # Create a GradScaler for mixed precision training
     # 混合精度训练
     scaler = torch.cuda.amp.GradScaler(enabled=cfg.TRAIN.MIXED_PRECISION)
@@ -591,8 +593,10 @@ def train(cfg):
             clear_name_pattern=cfg.TRAIN.CHECKPOINT_CLEAR_NAME_PATTERN,
             image_init=cfg.TRAIN.CHECKPOINT_IN_INIT,
         )
-        # start_epoch = checkpoint_epoch + 1
-        start_epoch = checkpoint_epoch - 20
+        start_epoch = checkpoint_epoch + 1
+        # start_epoch = checkpoint_epoch - 20
+        #共两处判断layer_decay  第二处
+        optimizer.param_groups = [{**x, **{'layer_decay': 1.0}} for x in optimizer.param_groups]
     else:
         start_epoch = 0
 

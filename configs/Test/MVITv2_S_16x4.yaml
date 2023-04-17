@@ -1,11 +1,11 @@
 TRAIN:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 4
+  BATCH_SIZE: 2
   EVAL_PERIOD: 10
-  CHECKPOINT_PERIOD: 25
+  CHECKPOINT_PERIOD: 5
   AUTO_RESUME: True
-  CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
+  # CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: pyav
@@ -89,11 +89,11 @@ TEST:
   BATCH_SIZE: 24
   NUM_SPATIAL_CROPS: 1
   NUM_ENSEMBLE_VIEWS: 5
-  # CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
+  CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
 DATA_LOADER:
   NUM_WORKERS: 4
   PIN_MEMORY: True
 NUM_GPUS: 2
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast_output/Test_MViT2_S
+OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast_output/Test_MViT2_S_400zero
