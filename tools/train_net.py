@@ -545,7 +545,7 @@ def train(cfg):
 
     # Construct the optimizer.
     optimizer = optim.construct_optimizer(model, cfg)
-    #共两处判断layer_decay  第二处
+    #共两处判断layer_decay  第一处
     print(optimizer.param_groups[0]["layer_decay"])
     # Create a GradScaler for mixed precision training
     # 混合精度训练
