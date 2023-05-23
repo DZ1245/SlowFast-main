@@ -1,11 +1,13 @@
 TRAIN:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 2
-  EVAL_PERIOD: 1
+  BATCH_SIZE: 3
+  EVAL_PERIOD: 2
   CHECKPOINT_PERIOD: 1
   AUTO_RESUME: True
   CHECKPOINT_FILE_PATH: /data/home/dz/checkpoint_log/SlowFast/PretrainPyth/MViTv2_S_16x4_k400.pyth
+  # 重新设置epoch，适用于Finetune
+  CHECKPOINT_EPOCH_RESET : True
 DATA:
   USE_OFFSET_SAMPLING: True
   DECODING_BACKEND: pyav
@@ -72,7 +74,7 @@ SOLVER:
   WARMUP_START_LR: 1e-6
   WARMUP_EPOCHS: 30.0
   LR_POLICY: cosine
-  MAX_EPOCH: 220
+  MAX_EPOCH: 200
   MOMENTUM: 0.9
   WEIGHT_DECAY: 0.05
   OPTIMIZING_METHOD: adamw
@@ -92,8 +94,8 @@ TEST:
   # CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
 DATA_LOADER:
   NUM_WORKERS: 6
-  PIN_MEMORY: True
+  PIN_MEMORY: False
 NUM_GPUS: 1
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast/Output/Finetune_MViTv2_S_UCF101_Date05_22_1620
+OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast/Output/Finetune_MViTv2_S_UCF101_Date05_23_1400

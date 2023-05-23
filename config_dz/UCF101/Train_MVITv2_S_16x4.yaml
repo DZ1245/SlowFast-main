@@ -86,7 +86,7 @@ MODEL:
 TEST:
   ENABLE: True
   DATASET: kinetics
-  BATCH_SIZE: 24
+  BATCH_SIZE: 6
   NUM_SPATIAL_CROPS: 1
   NUM_ENSEMBLE_VIEWS: 5
   # CHECKPOINT_FILE_PATH: /home/dz/workspace/SlowFast-main/modelpyth/MViTv2_S_16x4_k400.pyth
@@ -96,4 +96,4 @@ DATA_LOADER:
 NUM_GPUS: 1
 NUM_SHARDS: 1
 RNG_SEED: 0
-OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast/Output/Train_MViTv2_S_UCF101_Date05_22_1611
+OUTPUT_DIR: /data/home/dz/checkpoint_log/SlowFast/Output/Train_MViTv2_S_UCF101_Date05_22_1636

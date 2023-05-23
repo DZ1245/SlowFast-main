@@ -542,13 +542,16 @@ def train(cfg):
     flops, params = 0.0, 0.0
     if du.is_master_proc() and cfg.LOG_MODEL_INFO:
         flops, params = misc.log_model_info(model, cfg, use_train_input=True)
-
+    
     # Construct the optimizer.
     optimizer = optim.construct_optimizer(model, cfg)
-    #共两处判断layer_decay  第一处
-    print(optimizer.param_groups[0]["layer_decay"])
-    # Create a GradScaler for mixed precision training
-    # 混合精度训练
+    
+    # 申师兄改：
+    # 共两处判断layer_decay  第一处
+    # print(optimizer.param_groups[0]["layer_decay"])
+    
+    #  Create a GradScaler for mixed precision training
+    # 混合精度训练 不自动放缩 不使用scaler
     scaler = torch.cuda.amp.GradScaler(enabled=cfg.TRAIN.MIXED_PRECISION)
 
     # Load a checkpoint to resume training if applicable.
@@ -579,6 +582,7 @@ def train(cfg):
             start_epoch = checkpoint_epoch + 1
         else:
             start_epoch = 0
+    # 提供权重用于继续训练
     elif cfg.TRAIN.CHECKPOINT_FILE_PATH != "":
         logger.info("Load from given checkpoint file.")
         checkpoint_epoch = cu.load_checkpoint(
@@ -595,8 +599,10 @@ def train(cfg):
         )
         start_epoch = checkpoint_epoch + 1
         # start_epoch = checkpoint_epoch - 20
-        #共两处判断layer_decay  第二处
-        optimizer.param_groups = [{**x, **{'layer_decay': 1.0}} for x in optimizer.param_groups]
+        
+        # 申师兄改：
+        # 共两处判断layer_decay  第二处
+        # optimizer.param_groups = [{**x, **{'layer_decay': 1.0}} for x in optimizer.param_groups]
     else:
         start_epoch = 0
 

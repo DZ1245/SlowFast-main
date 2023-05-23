@@ -86,3 +86,16 @@
   [pyav decode leads memory leaks issue when 'duration' is none · Issue #626 · facebookresearch/SlowFast (github.com)](https://github.com/facebookresearch/SlowFast/issues/626)
 
   [Datasets-OpenDataLab](https://opendatalab.com/)
+
+## Finetune代码修改
+
+
+* CUDA中无法定位具体错误位置
+  
+  operator(): block: [0,0,0], thread: [1,0,0] Assertion `idx_dim >= 0 && idx_dim < index_size && "index out of bounds"` failed.
+  
+  在命令前设置 CUDA_LAUNCH_BLOCKING=1，用CPU运行 
+
+* cuda error device-side assert triggered 越界问题
+  
+  出在UCF101数据集官方给予的label标记是从1-101，而分类头下标是0-100，修改数据即可

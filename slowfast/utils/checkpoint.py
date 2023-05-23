@@ -565,8 +565,12 @@ def load_checkpoint(
             # Load the optimizer state (commonly not done when fine-tuning)
         if "epoch" in checkpoint.keys() and not epoch_reset:
             epoch = checkpoint["epoch"]
+            
+            # Finetune不用过往梯度
             if optimizer:
                 optimizer.load_state_dict(checkpoint["optimizer_state"])
+            
+
             if scaler:
                 scaler.load_state_dict(checkpoint["scaler_state"])
         else:
