@@ -98,9 +98,11 @@ class Predictor:
                 inputs = inputs.cuda(
                     device=torch.device(self.gpu_id), non_blocking=True
                 )
+
         if self.cfg.DETECTION.ENABLE and not bboxes.shape[0]:
             preds = torch.tensor([])
         else:
+
             preds = self.model(inputs, bboxes)
 
         if self.cfg.NUM_GPUS:

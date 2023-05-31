@@ -2,8 +2,14 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved.
 
 from rich.traceback import install
-install(show_locals=False)
 
+import faulthandler
+# 在import之后直接添加以下启用代码即可
+faulthandler.enable()
+# import sys
+# sys.path.append('/home/dz/workspace/SlowFast-main/')
+
+install(show_locals=False)
 """Wrapper to train and test a video classification model."""
 from slowfast.config.defaults import assert_and_infer_cfg
 from slowfast.utils.misc import launch_job

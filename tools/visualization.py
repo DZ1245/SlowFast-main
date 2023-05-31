@@ -44,15 +44,22 @@ def run_visualization(vis_loader, model, cfg, writer=None):
     layer_ls, indexing_dict = process_layer_index_data(
         cfg.TENSORBOARD.MODEL_VIS.LAYER_LIST, layer_name_prefix=prefix
     )
-    logger.info("Start Model Visualization.")
+    print(model._modules.keys())
+    print(type(model._modules['patch_embed']))
+    logger.info("Start Model Visualization")
+
     # Register hooks for activations.
+    
     model_vis = GetWeightAndActivation(model, layer_ls)
 
+    
     if writer is not None and cfg.TENSORBOARD.MODEL_VIS.MODEL_WEIGHTS:
         layer_weights = model_vis.get_weights()
+        
         writer.plot_weights_and_activations(
             layer_weights, tag="Layer Weights/", heat_map=False
         )
+        
 
     video_vis = VideoVisualizer(
         cfg.MODEL.NUM_CLASSES,
@@ -78,7 +85,7 @@ def run_visualization(vis_loader, model, cfg, writer=None):
         )
     logger.info("Finish drawing weights.")
     global_idx = -1
-    for inputs, labels, _, meta in tqdm.tqdm(vis_loader):
+    for inputs, labels, _, _ , meta in tqdm.tqdm(vis_loader):
         if cfg.NUM_GPUS:
             # Transfer the data to the current GPU device.
             if isinstance(inputs, (list,)):

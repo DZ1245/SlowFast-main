@@ -450,7 +450,7 @@ class ResNet(nn.Module):
     lateral connection (C2D, I3D, Slow).
 
     Christoph Feichtenhofer, Haoqi Fan, Jitendra Malik, and Kaiming He.
-    "SlowFast networks for video recognition."
+    "SlowFast netwo0
     https://arxiv.org/pdf/1812.03982.pdf
 
     Xiaolong Wang, Ross Girshick, Abhinav Gupta, and Kaiming He.
@@ -1188,6 +1188,7 @@ class MViT(nn.Module):
 
     def forward(self, x, bboxes=None, return_attn=False):
         x = x[0]
+
         x, bcthw = self.patch_embed(x)
         bcthw = list(bcthw)
         if len(bcthw) == 4:  # Fix bcthw in case of 4D tensor

@@ -101,9 +101,11 @@ def demo(cfg):
             slowfast/config/defaults.py
     """
     # AVA format-specific visualization with precomputed boxes.
+    logger.info("Run demo with config:34344322222222222222222234")
     if cfg.DETECTION.ENABLE and cfg.DEMO.PREDS_BOXES != "":
         precomputed_box_vis = AVAVisualizerWithPrecomputedBox(cfg)
         precomputed_box_vis()
+        logger.info("Run demo with config:3434433333333333334")
     else:
         start = time.time()
         if cfg.DEMO.THREAD_ENABLE:
@@ -111,8 +113,13 @@ def demo(cfg):
         else:
             frame_provider = VideoManager(cfg)
 
-        for task in tqdm.tqdm(run_demo(cfg, frame_provider)):
+        # for task in tqdm.tqdm(run_demo(cfg, frame_provider)):
+        #     frame_provider.display(task)
+
+        for task in run_demo(cfg, frame_provider):
+            logger.info("Run demo with config:34344334")
             frame_provider.display(task)
+
 
         frame_provider.join()
         frame_provider.clean()

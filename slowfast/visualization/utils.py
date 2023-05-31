@@ -167,7 +167,7 @@ class GetWeightAndActivation:
             layers (list of strings): a list of layer names to obtain weights and activations from.
                 Names are hierarchical, separated by /. For example, If a layer follow a path
                 "s1" ---> "pathway0_stem" ---> "conv", the layer path is "s1/pathway0_stem/conv".
-        """
+        """  
         self.model = model
         self.hooks = {}
         self.layers_names = layers

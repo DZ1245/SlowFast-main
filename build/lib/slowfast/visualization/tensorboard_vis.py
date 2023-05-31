@@ -205,6 +205,7 @@ class TensorboardWriter(object):
                 where indexing is numpy-like fancy indexing.
             heatmap (bool): whether to add heatmap to the weights/ activations.
         """
+
         for name, array in weight_activation_dict.items():
             if batch_idx is None:
                 # Select all items in the batch if batch_idx is not provided.
@@ -351,6 +352,8 @@ def add_ndim_array(
         global_step (Optional[int]): current step.
         heat_map (bool): whether to add heat map to 2D each 2D filters in array.
     """
+    # print("****************")
+    # print(reshaped_array.size())
     if array is not None and array.ndim != 0:
         if array.ndim == 1:
             reshaped_array = array.unsqueeze(0)

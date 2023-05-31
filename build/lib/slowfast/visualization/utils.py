@@ -168,6 +168,8 @@ class GetWeightAndActivation:
                 Names are hierarchical, separated by /. For example, If a layer follow a path
                 "s1" ---> "pathway0_stem" ---> "conv", the layer path is "s1/pathway0_stem/conv".
         """
+        print("***********************************")
+        
         self.model = model
         self.hooks = {}
         self.layers_names = layers
@@ -181,6 +183,7 @@ class GetWeightAndActivation:
         Args:
             layer_name (str): the name of the layer.
         """
+        print("***********************************")
         layer_ls = layer_name.split("/")
         prev_module = self.model
         for layer in layer_ls:
@@ -205,7 +208,10 @@ class GetWeightAndActivation:
         """
         Register hooks to layers in `self.layers_names`.
         """
+        print("*************************")
+        print(self.layers_names)
         for layer_name in self.layers_names:
+            print('*********'+layer_name)
             self._register_single_hook(layer_name)
 
     def get_activations(self, input, bboxes=None):
@@ -332,10 +338,12 @@ def get_layer(model, layer_name):
     Returns:
         prev_module (nn.Module): the layer from the model with `layer_name` name.
     """
+    print("***********************************")
     layer_ls = layer_name.split("/")
     prev_module = model
     for layer in layer_ls:
         prev_module = prev_module._modules[layer]
+
 
     return prev_module
 

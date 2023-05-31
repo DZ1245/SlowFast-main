@@ -127,6 +127,12 @@ def perform_test(test_loader, model, test_meter, cfg, writer=None):
             video_idx = video_idx.cpu()
 
         test_meter.iter_toc()
+        
+        # DEMO
+        # top_values, top_indices = torch.topk(preds, k=5)
+        # print(labels)
+        # print(top_indices)
+        # print(labels in top_indices[0])
 
         if not cfg.VIS_MASK.ENABLE:
             # Update and log stats.
