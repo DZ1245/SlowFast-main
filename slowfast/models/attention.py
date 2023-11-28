@@ -70,6 +70,9 @@ def cal_rel_pos_spatial(
     """
     Decomposed Spatial Relative Positional Embeddings.
     """
+    # print("cal_rel_pos_spatial")
+    # print(attn.shape)
+    # exit(0)
     sp_idx = 1 if has_cls_embed else 0
     q_t, q_h, q_w = q_shape
     k_t, k_h, k_w = k_shape

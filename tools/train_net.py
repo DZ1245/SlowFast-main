@@ -146,6 +146,7 @@ def train_epoch(
                 loss = partial_loss
             else:
                 # Compute the loss.
+                #print(preds.shape,labels.shape)
                 loss = loss_fun(preds, labels)
 
         loss_extra = None
